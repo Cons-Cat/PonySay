@@ -7,7 +7,7 @@ struct App {
 mut:
 		tui      &tui.Context = 0
 		redraw   bool
-		tick i8
+		tick byte
 }
 
 fn init(x voidptr) {
@@ -23,15 +23,16 @@ fn event(e &tui.Event, x voidptr) {
 fn frame(x voidptr) {
 		mut app := &App(x)
 		if !app.redraw { return }
+		app.tick = (app.tick + 1) % 255
 		app.tui.clear()
 
 		// Pony
 		pony_state := ani.Pony_State {
-				tick: app.tick + 1
+				tick: app.tick
 				head: ani.anim_head(app.tick+1)
 		}
-		for i, s in pony_state.head{
-				app.tui.draw_text(s.offset, i + 2, s.runes)
+		for i, strip in pony_state.head {
+				app.tui.draw_text(1 + strip.offset, i + 2, strip.runes)
 		}
 
 		// Say
@@ -54,7 +55,7 @@ fn main() {
 				frame_fn: frame
 
 				hide_cursor: true
-				frame_rate: 60
+				frame_rate: 20
 		)
 
 		app.tui.run()
