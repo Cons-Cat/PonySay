@@ -24,7 +24,8 @@ fn frame(x voidptr) {
 		mut app := &App(x)
 		if !app.redraw { return }
 		app.tick = (app.tick + 1) % 256
-		pony_off := app.tui.window_width / 2 - 12
+		pony_hoff := app.tui.window_width / 2 - 12
+		pony_voff := 2
 
 		app.tui.clear()
 
@@ -33,15 +34,19 @@ fn frame(x voidptr) {
 				head: ani.anim_head(app.tick)
 				body: ani.anim_body(app.tick)
 				leg: ani.anim_leg(app.tick)
+				horn: ani.anim_horn(app.tick)
 		}
 		for i, strip in pony_state.body {
-				app.tui.draw_text(pony_off + strip.offset, i + 6, strip.runes)
+				app.tui.draw_text(pony_hoff + strip.offset, pony_voff + i + 6, strip.runes)
 		}
 		for i, strip in pony_state.head {
-				app.tui.draw_text(pony_off + strip.offset, i + 3, strip.runes)
+				app.tui.draw_text(pony_hoff + strip.offset, pony_voff + i + 3, strip.runes)
 		}
 		for i, strip in pony_state.leg {
-				app.tui.draw_text(pony_off + strip.offset, i + 7, strip.runes)
+				app.tui.draw_text(pony_hoff + strip.offset, pony_voff + i + 7, strip.runes)
+		}
+		for i, strip in pony_state.horn {
+				app.tui.draw_text(pony_hoff + strip.offset, pony_voff + i + 1, strip.runes)
 		}
 
 		// Say
@@ -49,9 +54,9 @@ fn frame(x voidptr) {
 				'hello'
 				'world'
 		]
-		app.tui.draw_text(app.tui.window_width / 2, 0, sayings[rand.intn(sayings.len)])
+		app.tui.draw_text(app.tui.window_width / 2, 1, sayings[rand.intn(sayings.len)])
 
-		app.tui.reset()
+	app.tui.reset()
 		app.tui.flush()
 }
 

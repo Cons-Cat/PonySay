@@ -32,8 +32,8 @@ pub fn anim_head(tick byte) []Pony_Strip{
 				 Pony_Strip{'/ _\\)\\__|_', 8}
 				 Pony_Strip{'\\__/  |\\_/', 8}],
 		]
-		return frames[tick % 3]
-		// return frames[0]
+		// return frames[tick % 3]
+		return frames[0]
 }
 
 pub fn anim_body(tick byte) []Pony_Strip {
@@ -55,4 +55,20 @@ pub fn anim_leg(tick byte) []Pony_Strip {
 				Pony_Strip{'/_|', 13}]
 		]
 		return frames[0]
+}
+
+pub fn anim_horn(tick byte) []Pony_Strip {
+		frames := [
+				[Pony_Strip{' ', 12},
+				 Pony_Strip{':', 12}],
+				[Pony_Strip{'*', 12},
+				 Pony_Strip{':', 12}],
+				[Pony_Strip{'* *', 11},
+				 Pony_Strip{'!', 12}],
+				[Pony_Strip{'*', 12},
+				 Pony_Strip{'*:*', 11}],
+				[Pony_Strip{' ', 11},
+				 Pony_Strip{'*!*', 11}]
+		]
+		return frames[tick % 5]
 }
