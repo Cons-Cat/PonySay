@@ -1,18 +1,18 @@
 import term
 import term.ui as tui
+import animations as ani
 import rand
-
 
 struct App {
 mut:
 		tui      &tui.Context = 0
 		redraw   bool
+		tick i8
 }
 
 fn init(x voidptr) {
 		mut a := &App(x)
 		a.redraw = true
-	// a.init_file()
 }
 
 fn event(e &tui.Event, x voidptr) {
@@ -21,23 +21,29 @@ fn event(e &tui.Event, x voidptr) {
 }
 
 fn frame(x voidptr) {
-	mut app := &App(x)
-	if !app.redraw { return }
+		mut app := &App(x)
+		if !app.redraw { return }
+		app.tui.clear()
 
-	app.tui.clear()
+		// Pony
+		pony_state := ani.Pony_State {
+				tick: app.tick + 1
+				head: ani.anim_head(app.tick+1)
+		}
+		for i, s in pony_state.head{
+				app.tui.draw_text(s.offset, i + 2, s.runes)
+		}
 
+		// Say
 		sayings := [
 				'hello'
 				'world'
 		]
-
 		app.tui.draw_text(app.tui.window_width / 2, 0, sayings[rand.intn(sayings.len)])
 
 		app.tui.reset()
 		app.tui.flush()
-		// app.redraw = false
 }
-
 
 fn main() {
 		mut app := &App{}
