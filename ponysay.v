@@ -24,6 +24,8 @@ fn frame(x voidptr) {
 		mut app := &App(x)
 		if !app.redraw { return }
 		app.tick = (app.tick + 1) % 256
+		pony_off := app.tui.window_width / 2 - 12
+
 		app.tui.clear()
 
 		// Pony
@@ -32,10 +34,10 @@ fn frame(x voidptr) {
 				body: ani.anim_body(app.tick)
 		}
 		for i, strip in pony_state.body {
-				app.tui.draw_text(1 + strip.offset, i + 6, strip.runes)
+				app.tui.draw_text(pony_off + strip.offset, i + 6, strip.runes)
 		}
 		for i, strip in pony_state.head {
-				app.tui.draw_text(9 + strip.offset, i + 3, strip.runes)
+				app.tui.draw_text(pony_off + strip.offset, i + 3, strip.runes)
 		}
 
 		// Say
