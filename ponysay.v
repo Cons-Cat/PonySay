@@ -32,12 +32,16 @@ fn frame(x voidptr) {
 		pony_state := ani.Pony_State {
 				head: ani.anim_head(app.tick)
 				body: ani.anim_body(app.tick)
+				leg: ani.anim_leg(app.tick)
 		}
 		for i, strip in pony_state.body {
 				app.tui.draw_text(pony_off + strip.offset, i + 6, strip.runes)
 		}
 		for i, strip in pony_state.head {
 				app.tui.draw_text(pony_off + strip.offset, i + 3, strip.runes)
+		}
+		for i, strip in pony_state.leg {
+				app.tui.draw_text(pony_off + strip.offset, i + 7, strip.runes)
 		}
 
 		// Say
@@ -58,10 +62,8 @@ fn main() {
 				init_fn:  init,
 				event_fn: event,
 				frame_fn: frame
-
 				hide_cursor: true
 				frame_rate: 20
 		)
-
 		app.tui.run()
 }

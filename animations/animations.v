@@ -4,6 +4,9 @@ pub struct Pony_State {
 		pub:
 		head []Pony_Strip
 		body []Pony_Strip
+		leg []Pony_Strip
+		horn []Pony_Strip
+		tail []Pony_Strip
 }
 
 struct Pony_Strip{
@@ -40,6 +43,16 @@ pub fn anim_body(tick byte) []Pony_Strip {
 				 Pony_Strip{'| ♥  :   _ |',0},
 				 Pony_Strip{'\\  |-!    |',1},
 				 Pony_Strip{'|_\\ _\\  /_|',1}]
+		]
+		return frames[0]
+}
+
+pub fn anim_leg(tick byte) []Pony_Strip {
+		frames := [
+				[Pony_Strip{'\\', 14},
+				Pony_Strip{'|', 14},
+				Pony_Strip{'\\', 15},
+				Pony_Strip{'/_|', 13}]
 		]
 		return frames[0]
 }
