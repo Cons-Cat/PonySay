@@ -44,14 +44,8 @@ fn longest_str_len(strings []string) byte {
 
 pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		// TODO: Bug report
-		// ver_span := int(math.max(s_bot.origin.y + s_bot.strips.len, s_top.origin.y + s_top.strips.len) - math.min(s_bot.origin.y, s_top.origin.y))
-
-		// maxy := if s_bot.origin.y + s_bot.strips.len > s_top.origin.y + s_top.strips.len {s_bot.origin.y + s_bot.strips.len} else {s_top.origin.y + s_top.strips.len}
-		// miny := if s_bot.origin.y < s_top.origin.y { s_bot.origin.y } else { s_top.origin.y }
-		// ver_span := int(maxy) - int(miny)
-
-		ver_span := 30
-		hor_span := 20
+		ver_span := int(math.max(s_bot.origin.y + s_bot.strips.len, s_top.origin.y + s_top.strips.len) - math.min(s_bot.origin.y, s_top.origin.y))
+		hor_span := int(math.max(s_bot.origin.x + s_bot.strips[0].runes.len, s_top.origin.x + s_top.strips[0].runes.len) - math.min(s_bot.origin.x, s_top.origin.x)) + 1
 
 		// off_bx := if s_top.origin.x < s_bot.origin.x { s_bot.origin.x - s_top.origin.x } else { 0 }
 		// off_tx := if s_bot.origin.x < s_top.origin.x  { s_top.origin.x - s_bot.origin.x } else { 0 }
@@ -70,8 +64,7 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 						// temp_str += s_bot.strips[j].runes[i]
 
 						// TODO: Make ticket for assigning byte a negative value
-						if j >= s_top.origin.y + off_ty && j < s_top.origin.y + off_ty + s_top.strips.len
-								&& i >= s_top.origin.x && i < s_top.origin.x + s_top.strips[j].runes.len
+						if j >= s_top.origin.y + off_ty && j < s_top.origin.y + off_ty + s_top.strips.len && i >= s_top.origin.x && i < s_top.origin.x + s_top.strips[j].runes.len
 						{
 								temp_str += s_top.strips[s_top.origin.y + off_ty + j].runes[i-8].str()
 						} else if j >= s_bot.origin.y + off_by && j < s_bot.origin.y + off_by + s_bot.strips.len && i >= s_bot.origin.x && i < s_bot.origin.x + s_bot.strips[j-off_by].runes.len {
@@ -81,6 +74,7 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 								temp_str += 'x'
 						}
 				}
+				// temp_str += 'y'
 
 				return_strips << Pony_Strip {
 						runes: temp_str.clone()
