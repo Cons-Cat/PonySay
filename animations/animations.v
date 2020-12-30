@@ -15,8 +15,8 @@ pub:
 
 pub struct Coord {
 pub:
-		x byte
-		y byte
+		x i8
+		y i8
 }
 
 fn strings_from_strip(strips []Pony_Strip) []string {
@@ -43,67 +43,37 @@ fn longest_str_len(strings []string) byte {
 }
 
 pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
-// pub fn (s_bot Pony_Part) stack_part() Pony_Part {
-		// bot_strings := strings_from_strip(s_bot)
-		// top_strings := strings_from_strip(s_top)
-
-		// min_x := min(s_bot.origin.x, s_top.origin.x)
-		// max_x := max(s_bot.origin.x + longest_str(bot_strings), s_top.origin.x + longest_str(top_strings))
-
-		// min_y := math.min(s_bot.origin.y, s_top.origin.y)
-		// max_y := math.max(s_bot.origin.y + s_bot.strips.len, s_top.origin.y + s_top.strips.len)
-
-		// mut m := map[string]int
-
-		// TODO: Refactor
-		mut strs_bot := []string{}
-		for s in s_bot.strips {
-				// m[s.runes] = s.runes.len
-				strs_bot << s.runes
-		}
-		mut strs_top := []string{}
-		for s in s_top.strips {
-				// m[s.runes] = s.runes.len
-				strs_top << s.runes
-		}
-		// longest_len := longest_str_len(m.keys())
-
-		// longest_len_bot := longest_str_len(strs_bot) - 1
-		// longest_len_top := longest_str_len(strs_top)
-
-		// longest_len := longest_str_len(strs)
-		// longest_len := 1
-
 		// TODO: Bug report
 		// ver_span := int(math.max(s_bot.origin.y + s_bot.strips.len, s_top.origin.y + s_top.strips.len) - math.min(s_bot.origin.y, s_top.origin.y))
 
 		// maxy := if s_bot.origin.y + s_bot.strips.len > s_top.origin.y + s_top.strips.len {s_bot.origin.y + s_bot.strips.len} else {s_top.origin.y + s_top.strips.len}
 		// miny := if s_bot.origin.y < s_top.origin.y { s_bot.origin.y } else { s_top.origin.y }
 		// ver_span := int(maxy) - int(miny)
+
 		ver_span := 30
+		hor_span := 20
 
-		off_bx := if s_top.origin.x < s_bot.origin.x { s_bot.origin.x - s_top.origin.x } else { 0 }
-		off_tx := if s_bot.origin.x < s_top.origin.x  { s_top.origin.x - s_bot.origin.x } else { 0 }
+		// off_bx := if s_top.origin.x < s_bot.origin.x { s_bot.origin.x - s_top.origin.x } else { 0 }
+		// off_tx := if s_bot.origin.x < s_top.origin.x  { s_top.origin.x - s_bot.origin.x } else { 0 }
 
-		off_by := if s_top.origin.y > s_bot.origin.y { s_bot.origin.y - s_top.origin.y } else { 0 }
-		off_ty := if s_bot.origin.y > s_top.origin.y { s_top.origin.y - s_bot.origin.y } else { 0 }
+		off_by := if s_top.origin.y < s_bot.origin.y { s_bot.origin.y - s_top.origin.y } else { 0 }
+		off_ty := if s_bot.origin.y > s_top.origin.y { s_bot.origin.y - s_top.origin.y } else { 0 }
 
 		mut return_strips := []Pony_Strip{}
-		// for j, s in s_bot.strips {
 		for j in 0 .. ver_span {
 				// mut temp_str := ' '.repeat(s.offset)
 				mut temp_str := ''
+				println(s_bot.origin.y)
 
-				hor_span := 20
-				// for i in 0 .. s_bot.strips[j].runes.len {
 				for i in 0 .. hor_span {
-						// TODO: Make ticket
+						// TODO: Make ticket for returing bytes
 						// temp_str += s_bot.strips[j].runes[i]
 
-						if j >= 0 && j < 4 && i >= s_top.origin.x && i < s_top.origin.x + s_top.strips[j].runes.len {
-								// if false {
-								// temp_str += ' '.repeat(s_top.strips[j].offset)
-								temp_str += s_top.strips[j].runes[i-8].str()
+						// TODO: Make ticket for assigning byte a negative value
+						if j >= s_top.origin.y + off_ty && j < s_top.origin.y + off_ty + s_top.strips.len
+								&& i >= s_top.origin.x && i < s_top.origin.x + s_top.strips[j].runes.len
+						{
+								temp_str += s_top.strips[s_top.origin.y + off_ty + j].runes[i-8].str()
 						} else if j >= s_bot.origin.y + off_by && j < s_bot.origin.y + off_by + s_bot.strips.len && i >= s_bot.origin.x && i < s_bot.origin.x + s_bot.strips[j-off_by].runes.len {
 								// temp_str += ' '.repeat(s_bot.strips[j].offset)
 								temp_str += s_bot.strips[j-off_by].runes[i].str()
