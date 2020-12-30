@@ -86,7 +86,7 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		off_tx := if s_bot.origin.x < s_top.origin.x  { s_top.origin.x - s_bot.origin.x } else { 0 }
 
 		off_by := if s_top.origin.y > s_bot.origin.y { s_bot.origin.y - s_top.origin.y } else { 0 }
-		off_ty := if s_bot.origin.y < s_top.origin.y { s_top.origin.y - s_bot.origin.y } else { 0 }
+		off_ty := if s_bot.origin.y > s_top.origin.y { s_top.origin.y - s_bot.origin.y } else { 0 }
 
 		mut return_strips := []Pony_Strip{}
 		// for j, s in s_bot.strips {
@@ -97,23 +97,16 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 				hor_span := 20
 				// for i in 0 .. s_bot.strips[j].runes.len {
 				for i in 0 .. hor_span {
-						// if i >= s_top.origin.x && i < s_top.origin.x + longest_len_top {
-						// if i >= s_top.origin.x && i < s_top.origin.x {
-						if false {
-						// if i >= 81 {
-								// TODO: Make ticket
-								// temp_str += s_bot.strips[j].runes[i]
-								// if j < s_top.origin.y + s_top.strips.len {
-										// temp_str += ' '.repeat(s_top.strips[j].offset)
-										// temp_str += s_top.strips[j].runes[i].str()
-								// }
-						} else if j >= s_bot.origin.y + off_by&& j < s_bot.origin.y + off_by+ s_bot.strips.len {
-								if i >= s_bot.origin.x && i < s_bot.origin.x + s_bot.strips[j-off_by].runes.len {
-						// } else {
-								// if j >= s_bot.origin.y && j < s_bot.origin.y + s_bot.strips.len {
+						// TODO: Make ticket
+						// temp_str += s_bot.strips[j].runes[i]
+
+						if j >= 0 && j < 4 && i >= s_top.origin.x && i < s_top.origin.x + s_top.strips[j].runes.len {
+								// if false {
+								// temp_str += ' '.repeat(s_top.strips[j].offset)
+								temp_str += s_top.strips[j].runes[i-8].str()
+						} else if j >= s_bot.origin.y + off_by && j < s_bot.origin.y + off_by + s_bot.strips.len && i >= s_bot.origin.x && i < s_bot.origin.x + s_bot.strips[j-off_by].runes.len {
 								// temp_str += ' '.repeat(s_bot.strips[j].offset)
-										temp_str += s_bot.strips[j-off_by].runes[i].str()
-								}
+								temp_str += s_bot.strips[j-off_by].runes[i].str()
 						} else {
 								temp_str += 'x'
 						}
