@@ -24,24 +24,22 @@ fn frame(x voidptr) {
 		mut app := &App(x)
 		if !app.redraw { return }
 		app.tick = (app.tick + 1) % 256
-		// pony_hoff := app.tui.window_width / 2 - 12
-		// pony_voff := 2
 
 		app.tui.clear()
 
 		// Pony
-		pony_state := ani.Pony_Part {
+		pony_whole := ani.Pony_Part {
 				strips: ani.anim_body(app.tick)
-				origin: ani.Coord{
+				origin: ani.Coord {
 						byte(app.tui.window_width / 2 - 12),
 						5
 				}
-		}.stack_part(ani.Pony_Part(
+		}.join_parts(ani.Pony_Part(
 				strips: ani.anim_head(app.tick)
 				origin: ani.Coord{0,0}))
 
-		for i, strip in pony_state.strips {
-				app.tui.draw_text(pony_state.origin.x, pony_state.origin.y + i, strip.runes)
+		for i, strip in pony_whole.strips {
+				app.tui.draw_text(pony_whole.origin.x, pony_whole.origin.y + i, strip.runes)
 		}
 
 		// Say
