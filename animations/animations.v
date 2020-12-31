@@ -45,11 +45,8 @@ fn longest_str_len(strings []string) byte {
 pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		ver_span := int(math.max(s_bot.origin.y + s_bot.strips.len, s_top.origin.y + s_top.strips.len) - math.min(s_bot.origin.y, s_top.origin.y))
 		hor_span := int(math.max(s_bot.origin.x + s_bot.strips[0].runes.len, s_top.origin.x + s_top.strips[0].runes.len) - math.min(s_bot.origin.x, s_top.origin.x)) + 1
-
-		off_by := if s_top.origin.y < 0 { -s_top.origin.y } else { 0 }
-		off_bx := if s_top.origin.x < 0 { -s_top.origin.x } else { 0 }
-		off_ty := if s_top.origin.y < 0 { -s_top.origin.y } else { 0 }
-		off_tx := if s_top.origin.x < 0 { -s_top.origin.x } else { 0 }
+		off_y:= if s_top.origin.y < 0 { -s_top.origin.y } else { 0 }
+		off_x:= if s_top.origin.x < 0 { -s_top.origin.x } else { 0 }
 
 		mut return_strips := []Pony_Strip{}
 		for j in 0 .. ver_span {
@@ -61,18 +58,18 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 						//   temp_str += s_bot.strips[j].runes[i]
 						// TODO: Make ticket for assigning byte a negative value
 
-						if j >= s_top.origin.y + off_ty
-								&& j < s_top.origin.y + off_ty + s_top.strips.len
-								&& i >= s_top.origin.x + off_tx
-								&& i < s_top.origin.x + off_tx + s_top.strips[j - s_top.origin.y - off_ty].runes.len
+						if j >= s_top.origin.y + off_y
+								&& j < s_top.origin.y + off_y+ s_top.strips.len
+								&& i >= s_top.origin.x + off_x
+								&& i < s_top.origin.x + off_x+ s_top.strips[j - s_top.origin.y - off_y].runes.len
 						{
-								temp_str += s_top.strips[j - s_top.origin.y - off_ty].runes[i - s_top.origin.x - off_tx].str()
+								temp_str += s_top.strips[j - s_top.origin.y - off_y].runes[i - s_top.origin.x - off_x].str()
 						} else if
-								j >= s_bot.origin.y + off_by
-								&& j < s_bot.origin.y + off_by + s_bot.strips.len
-								&& i >= s_bot.origin.x + off_bx
-								&& i < s_bot.origin.x + off_bx + s_bot.strips[j-off_by].runes.len {
-										temp_str += s_bot.strips[j-off_by].runes[i - off_bx].str()
+								j >= s_bot.origin.y + off_y
+								&& j < s_bot.origin.y + off_y+ s_bot.strips.len
+								&& i >= s_bot.origin.x + off_x
+								&& i < s_bot.origin.x + off_x+ s_bot.strips[j-off_y].runes.len {
+										temp_str += s_bot.strips[j-off_y].runes[i - off_x].str()
 						} else {
 								temp_str += ' '
 						}
