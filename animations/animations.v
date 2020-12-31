@@ -131,23 +131,21 @@ pub fn anim_leg(tick byte) []Pony_Strip {
 		return frames[0]
 }
 
-/*
 pub fn anim_horn(tick byte) []Pony_Strip {
 		frames := [
-				[Pony_Strip{' ', 1},
-				 Pony_Strip{':', 1}],
-				[Pony_Strip{'*', 1},
-				 Pony_Strip{':', 1}],
+				[Pony_Strip{'', 1},
+				 Pony_Strip{' :', 1}],
+				[Pony_Strip{' *', 1},
+				 Pony_Strip{' :', 1}],
 				[Pony_Strip{'* *', 0},
-				 Pony_Strip{'!', 1}],
-				[Pony_Strip{'*', 1},
+				 Pony_Strip{' !', 1}],
+				[Pony_Strip{' *', 1},
 				 Pony_Strip{'*:*', 0}],
 				[Pony_Strip{' ', 0},
 				 Pony_Strip{'*!*', 0}]
 		]
 		return frames[tick % 5]
 }
-*/
 
 pub fn anim_tail(tick byte) []Pony_Strip {
 		frames := [

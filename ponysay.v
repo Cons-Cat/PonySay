@@ -45,7 +45,11 @@ fn frame(x voidptr) {
 									 )
 				.join_parts(ani.Pony_Part(
 						strips: ani.anim_tail(app.tick)
-						origin: ani.Coord{-4, 2}))
+						origin: ani.Coord{-4, 2})
+									 )
+				.join_parts(ani.Pony_Part(
+						strips: ani.anim_horn(app.tick)
+						origin: ani.Coord{15, -2}))
 
 		for i, strip in pony_whole.strips {
 				app.tui.draw_text(pony_whole.origin.x + 3, pony_whole.origin.y + i + 1, strip.runes)
