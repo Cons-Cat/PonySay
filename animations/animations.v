@@ -94,15 +94,19 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		}
 }
 
-pub fn make_part_body(tick byte) Pony_Part {
+pub fn make_part(tick byte, pattern fn (byte) Pony_Part) Pony_Part {
+		return pattern(tick)
+}
+
+pub fn pony_body_pattern (tick byte) Pony_Part {
 		return Pony_Part {
-				strips: anim_body(tick)
-				origin: Coord{0, 0}
-				joints: []Joint{}
+				strips: pony_body_strips(tick)
+				origin: pony_body_origin(tick)
+				joints: pony_body_joints(tick)
 		}
 }
 
-fn anim_body(tick byte) []Pony_Strip {
+fn pony_body_strips(tick byte) []Pony_Strip {
 		frames := [
 				[Pony_Strip{'     __-'},
 				 // Pony_Strip{' / ♥       :'},
@@ -113,6 +117,15 @@ fn anim_body(tick byte) []Pony_Strip {
 				 Pony_Strip{' |_\\ _\\  /_|'}]
 		]
 		return frames[0]
+}
+
+fn pony_body_origin(tick byte) Coord {
+		return Coord{0,0}
+}
+
+fn pony_body_joints(tick byte) []Joint{
+		// TODO: Hard code a joints array.
+		return []
 }
 
 /*pub fn anim_head(tick byte) []Pony_Strip {

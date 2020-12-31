@@ -28,7 +28,7 @@ fn frame(x voidptr) {
 		app.tui.clear()
 
 		// Pony
-		pony_whole := ani.make_part_body(app.tick)
+		pony_whole := ani.make_part(app.tick, ani.pony_body_pattern)
 
 		for i, strip in pony_whole.strips {
 				app.tui.draw_text(pony_whole.origin.x + 3, pony_whole.origin.y + i + 1, strip.runes)
