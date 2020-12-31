@@ -28,29 +28,7 @@ fn frame(x voidptr) {
 		app.tui.clear()
 
 		// Pony
-		pony_whole := ani.Pony_Part {
-				strips: ani.anim_body(app.tick)
-				origin: ani.Coord {
-						// byte(app.tui.window_width / 2 - 12),
-						// 5
-						0, 0
-				}
-		}
-				/*.join_parts(ani.Pony_Part(
-				strips: ani.anim_head(app.tick)
-				origin: ani.Coord{8, -3})
-								)
-				.join_parts(ani.Pony_Part(
-						strips: ani.anim_leg(app.tick)
-						origin: ani.Coord{13, 4})
-									 )
-				.join_parts(ani.Pony_Part(
-						strips: ani.anim_tail(app.tick)
-						origin: ani.Coord{-4, 2})
-									 )
-				.join_parts(ani.Pony_Part(
-						strips: ani.anim_horn(app.tick)
-						origin: ani.Coord{15, -2}))*/
+		pony_whole := ani.make_part_body(app.tick)
 
 		for i, strip in pony_whole.strips {
 				app.tui.draw_text(pony_whole.origin.x + 3, pony_whole.origin.y + i + 1, strip.runes)

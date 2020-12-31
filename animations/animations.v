@@ -1,20 +1,20 @@
 module animations
 import math
 
-pub struct Pony_Part {
-pub:
+struct Pony_Part {
+		pub:
 		strips []Pony_Strip
 		origin Coord
 }
 
 struct Pony_Strip {
-pub:
+		pub:
 		runes string
 		// offset byte
 }
 
-pub struct Coord {
-pub:
+struct Coord {
+		pub:
 		x i8
 		y i8
 }
@@ -87,7 +87,14 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		}
 }
 
-pub fn anim_body(tick byte) []Pony_Strip {
+pub fn make_part_body(tick byte) Pony_Part {
+		return Pony_Part {
+				strips: anim_body(tick)
+				origin: Coord{0, 0}
+		}
+}
+
+fn anim_body(tick byte) []Pony_Strip {
 		frames := [
 				[Pony_Strip{'     __-'},
 				 // Pony_Strip{' / ♥       :'},
