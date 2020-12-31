@@ -5,6 +5,12 @@ struct Pony_Part {
 		pub:
 		strips []Pony_Strip
 		origin Coord
+		joints []Joint
+}
+
+struct Joint {
+		part Pony_Part
+		pivot Coord
 }
 
 struct Pony_Strip {
@@ -84,6 +90,7 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		return Pony_Part {
 				strips: return_strips
 				origin: s_bot.origin
+				joints: []Joint{}
 		}
 }
 
@@ -91,6 +98,7 @@ pub fn make_part_body(tick byte) Pony_Part {
 		return Pony_Part {
 				strips: anim_body(tick)
 				origin: Coord{0, 0}
+				joints: []Joint{}
 		}
 }
 
