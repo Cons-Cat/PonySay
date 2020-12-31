@@ -10,7 +10,7 @@ pub:
 struct Pony_Strip {
 pub:
 		runes string
-		offset byte
+		// offset byte
 }
 
 pub struct Coord {
@@ -77,7 +77,7 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 
 				return_strips << Pony_Strip {
 						runes: temp_str.clone()
-						offset: 0
+						// offset: 0
 				}
 		}
 
@@ -87,7 +87,20 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		}
 }
 
-pub fn anim_head(tick byte) []Pony_Strip {
+pub fn anim_body(tick byte) []Pony_Strip {
+		frames := [
+				[Pony_Strip{'     __-'},
+				 // Pony_Strip{' / ♥       :'},
+				 Pony_Strip{' / *       :'},
+				 // Pony_Strip{'| ♥  :   _ |'},
+				 Pony_Strip{'| *  :   _ |'},
+				 Pony_Strip{' \\  |-!    |'},
+				 Pony_Strip{' |_\\ _\\  /_|'}]
+		]
+		return frames[0]
+}
+
+/*pub fn anim_head(tick byte) []Pony_Strip {
 		frames := [
 				[Pony_Strip{'  ^_|_^', 2},
 				 Pony_Strip{' |(o o)', 1},
@@ -105,19 +118,6 @@ pub fn anim_head(tick byte) []Pony_Strip {
 				 Pony_Strip{'\\__/  |\\_/', 8}],
 		]
 		// return frames[tick % 3]
-		return frames[0]
-}
-
-pub fn anim_body(tick byte) []Pony_Strip {
-		frames := [
-				[Pony_Strip{'     __-',5},
-				 // Pony_Strip{' / ♥       :',1},
-				 Pony_Strip{' / *       :',1},
-				 // Pony_Strip{'| ♥  :   _ |',0},
-				 Pony_Strip{'| *  :   _ |',0},
-				 Pony_Strip{' \\  |-!    |',1},
-				 Pony_Strip{' |_\\ _\\  /_|',1}]
-		]
 		return frames[0]
 }
 
@@ -158,3 +158,4 @@ pub fn anim_tail(tick byte) []Pony_Strip {
 		]
 		return frames[0]
 }
+*/
