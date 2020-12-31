@@ -43,15 +43,13 @@ fn longest_str_len(strings []string) byte {
 }
 
 pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
-		// TODO: Bug report
 		ver_span := int(math.max(s_bot.origin.y + s_bot.strips.len, s_top.origin.y + s_top.strips.len) - math.min(s_bot.origin.y, s_top.origin.y))
 		hor_span := int(math.max(s_bot.origin.x + s_bot.strips[0].runes.len, s_top.origin.x + s_top.strips[0].runes.len) - math.min(s_bot.origin.x, s_top.origin.x)) + 1
 
-		off_by := if s_top.origin.y < s_bot.origin.y { s_bot.origin.y - s_top.origin.y } else { 0 }
-		// off_by := s_bot.origin.y - s_top.origin.y
+		off_by := if s_top.origin.y < 0 { -s_top.origin.y } else { 0 }
+		off_bx := if s_top.origin.x < 0 { -s_top.origin.x } else { 0 }
 		off_ty := if s_top.origin.y < 0 { -s_top.origin.y } else { 0 }
-		// off_ty := s_bot.origin.y - s_top.origin.y
-		// off_tx := if s_top.origin.x > s_bot.origin.x { s_top.origin.x - s_bot.origin.x } else { 0 }
+		off_tx := if s_top.origin.x < 0 { -s_top.origin.x } else { 0 }
 
 		mut return_strips := []Pony_Strip{}
 		for j in 0 .. ver_span {
@@ -65,20 +63,17 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 
 						if j >= s_top.origin.y + off_ty
 								&& j < s_top.origin.y + off_ty + s_top.strips.len
-								&& i >= s_top.origin.x
-								&& i < s_top.origin.x + s_top.strips[j - s_top.origin.y - off_ty].runes.len
+								&& i >= s_top.origin.x + off_tx
+								&& i < s_top.origin.x + off_tx + s_top.strips[j - s_top.origin.y - off_ty].runes.len
 						{
-								temp_str += s_top.strips[j - s_top.origin.y - off_ty].runes[- s_top.origin.x + i].str()
+								temp_str += s_top.strips[j - s_top.origin.y - off_ty].runes[i - s_top.origin.x - off_tx].str()
 						} else if
-								// false {
 								j >= s_bot.origin.y + off_by
 								&& j < s_bot.origin.y + off_by + s_bot.strips.len
-								&& i >= s_bot.origin.x
-								&& i < s_bot.origin.x + s_bot.strips[j-off_by].runes.len {
-										// temp_str += 'x'
-										temp_str += s_bot.strips[j-off_by].runes[i].str()
+								&& i >= s_bot.origin.x + off_bx
+								&& i < s_bot.origin.x + off_bx + s_bot.strips[j-off_by].runes.len {
+										temp_str += s_bot.strips[j-off_by].runes[i - off_bx].str()
 						} else {
-								// temp_str += 'x'
 								temp_str += ' '
 						}
 				}
@@ -132,9 +127,9 @@ pub fn anim_body(tick byte) []Pony_Strip {
 pub fn anim_leg(tick byte) []Pony_Strip {
 		frames := [
 				[Pony_Strip{' \\', 1},
-				Pony_Strip{' |', 1},
-				Pony_Strip{'  \\', 2},
-				Pony_Strip{'/_|', 0}]
+				 Pony_Strip{' |', 1},
+				 Pony_Strip{'  \\', 2},
+				 Pony_Strip{'/_|', 0}]
 		]
 		return frames[0]
 }
@@ -156,3 +151,15 @@ pub fn anim_horn(tick byte) []Pony_Strip {
 		return frames[tick % 5]
 }
 */
+
+pub fn anim_tail(tick byte) []Pony_Strip {
+		frames := [
+				[Pony_Strip{'     __', 1},
+				 Pony_Strip{'    /  \\', 1},
+				 Pony_Strip{'    |', 2},
+				 Pony_Strip{'|\\_|', 0},
+				 Pony_Strip{'|', 0},
+				 Pony_Strip{' \\_' 0}]
+		]
+		return frames[0]
+}
