@@ -63,6 +63,7 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 						// TODO: Make ticket for returing bytes
 						//   temp_str += s_bot.strips[j].runes[i]
 						// TODO: Make ticket for assigning byte a negative value
+						// TODO: Make ticket for indexing string with heart.
 
 						if j >= s_top.origin.y + off_y
 								&& j < s_top.origin.y + off_y+ s_top.strips.len
@@ -94,10 +95,15 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		}
 }
 
-pub fn make_part(tick byte, pattern fn (byte) Pony_Part) Pony_Part {
+// type Pattern_Type = fn (byte, []Pattern_Type) Pony_Part
+type Pattern_Type = fn (byte) Pony_Part
+
+pub fn make_part(tick byte, pattern Pattern_Type, joint_patterns []Pattern_Type) Pony_Part {
+		// return pattern(tick, joint_patterns)
 		return pattern(tick)
 }
 
+// pub fn pony_body_pattern (tick byte, pattern []Pattern_Type) Pony_Part {
 pub fn pony_body_pattern (tick byte) Pony_Part {
 		return Pony_Part {
 				strips: pony_body_strips(tick)
