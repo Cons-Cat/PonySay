@@ -95,16 +95,17 @@ pub fn (s_bot Pony_Part) join_parts (s_top Pony_Part) Pony_Part {
 		}
 }
 
-// type Pattern_Type = fn (byte, []Pattern_Type) Pony_Part
-type Pattern_Type = fn (byte) Pony_Part
+// TODO: Ticket? Type in its own signature after byte arg..
+// type Pattern_Type = fn (tick byte, joints []Pattern_Type) int
+// type Pattern_Type = fn (byte, Pattern_Type) Pony_Part
 
-pub fn make_part(tick byte, pattern Pattern_Type, joint_patterns []Pattern_Type) Pony_Part {
-		// return pattern(tick, joint_patterns)
-		return pattern(tick)
+type Pattern_Type = fn (joints []Pattern_Type, tick byte) Pony_Part
+
+pub fn make_part(tick byte, joint_patterns []Pattern_Type, pattern Pattern_Type) Pony_Part {
+		return pattern(joint_patterns, tick)
 }
 
-// pub fn pony_body_pattern (tick byte, pattern []Pattern_Type) Pony_Part {
-pub fn pony_body_pattern (tick byte) Pony_Part {
+pub fn pony_body_pattern (pattern []Pattern_Type, tick byte) Pony_Part {
 		return Pony_Part {
 				strips: pony_body_strips(tick)
 				origin: pony_body_origin(tick)
@@ -192,4 +193,3 @@ pub fn anim_tail(tick byte) []Pony_Strip {
 		]
 		return frames[0]
 }
-*/
